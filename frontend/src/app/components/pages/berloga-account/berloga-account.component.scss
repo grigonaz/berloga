@@ -1,0 +1,188 @@
+@import "/src/colors.scss";
+
+.account-list {
+  background: $primaryBackgroundDark;
+  position: relative;
+  height: calc(100% - 65px);
+  padding: 10px;
+}
+
+.name-header {
+  height: 40px;
+  line-height: 40px;
+  margin-bottom: 25px;
+  padding-left: 10px;
+}
+
+.left-side, .right-side, .welcome-holder {
+  min-height: 100%;
+  max-height: 100%;;
+  position: relative;
+}
+
+.account-item {
+  width: 100%;
+  height: 40px;
+  padding: 5px;
+  padding-left: 20px;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  box-sizing: border-box;
+  background: $secondaryColor;
+  line-height: 30px;
+  text-transform: capitalize;
+  border-radius: 5px;
+}
+
+.account-item:hover {
+  cursor: pointer;
+  background: lighten($color: $secondaryColor, $amount: 10);
+  transition: background-color 0.3s;
+}
+
+.account-item:first-of-type {
+  margin-top: 15px;
+}
+
+.acount-detail {
+  background: $primaryBackgroundLight;
+  position: relative;
+  height: calc(100% - 65px);
+  box-sizing: border-box;
+}
+
+
+.roles-holder{
+  width: auto;
+  padding: 6px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+}
+
+.role-item {
+  box-sizing: border-box;
+  display: inline;
+  width: min-content;
+  height: 30px;
+  line-height: 30px;
+  padding: 5px;
+  margin-right: 10px;
+  background: $terciaryColor;
+  border-radius: 5px;
+}
+
+.delete-role-button {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  text-align: center;
+  line-height: 18px;
+  margin: 5px;
+  margin-right: 0px;
+  border-radius: 10px;
+  border: 1px solid white;
+  background: black;
+  color: white;
+  cursor: pointer;
+}
+
+.role-moderator {
+  background: darkred;
+  color: white;
+}
+
+.role-teacher {
+  background: darkblue;
+  color: white;
+}
+
+.subject-header {
+  width: 50%;
+}
+
+.subject-item {
+  width: 100%;
+  float: left;
+  height: 34px;
+  margin-bottom: 7px;
+}
+
+.subject-item-data {
+  width: fit-content;
+  padding: 5px;
+  box-sizing: border-box;
+  line-height: 24px;
+  float: left;
+}
+
+.remove-button {
+  float: right;
+  margin-left: auto;
+}
+
+.brown-button {
+  background: $primaryBackgroundDark!important;
+  border: 1px solid darken($primaryBackgroundDark, 5);
+  border-radius: 5px;
+  color: $primaryTextColorLight;
+  text-align: center;
+  height: 34px;
+  line-height: 34px;
+  width: auto;
+  padding: 0px;
+  padding-left: 9px;
+  padding-right: 9px;
+  font-size: 14px;
+  white-space:nowrap !important;
+}
+
+.brown-button:hover {
+  background: darken($primaryBackgroundDark, 15);
+  border: 1px solid darken($primaryBackgroundDark, 15);
+  transition: background-color 0.3s, border 0.3s;
+  cursor: pointer;
+}
+
+.brown-button:active {
+  background: darken($primaryBackgroundDark, 30);
+  border: 1px solid darken($primaryBackgroundDark, 30);
+}
+
+.brown-button:focus {
+  outline: none;
+}
+
+.add-user {
+  float: right;
+  width: 76px;
+  height: 35px;
+  border-radius: 5px;
+  text-align: center;
+  line-height: 35px;
+  background: $primaryTextColor;
+  color: white;
+  cursor: hand;
+}
+
+.add-user:hover {
+  background: darken($primaryTextColor, 10);
+  transition: background-color 0.3s;
+  cursor: pointer;
+}
+
+.add-user:active {
+  background: darken($primaryTextColor, 30);
+}
+
+.add-user:focus {
+  outline: none;
+}
+
+.change-delete-button {
+  width: fit-content;
+}
+
+.in-center {
+  line-height: 34px;
+  text-align: center;
+}

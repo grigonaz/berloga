@@ -1,0 +1,41 @@
+<div class="background">
+  <div class="overlay">
+    <div class="login-wrapper">
+      <div class="login-content" id="loginTarget">
+        <a href="" class="close">x</a>
+        <h3>Sign in</h3>
+        <form method="post" action="/" id="signin_form">
+          <label for="email">
+            Email <span class="required-field">*</span> :
+            <input
+              [(ngModel)]="email"
+              type="text"
+              name="email"
+              id="email"
+              placeholder="example@email.com"
+              class="email-input"
+              pattern="\w+@\w+\.\w+"
+              required
+            />
+          </label>
+          <p id="email_validation" class="hide"></p>
+          <label for="password">
+            Password <span class="required-field">*</span> :
+            <input
+              [(ngModel)]="password"
+              type="password"
+              class="password-input"
+              name="password"
+              id="password"
+              placeholder="Password must contain 1 uppercase, lowercase and number"
+              pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$"
+              required
+            />
+          </label>
+          <p id="password_validation" class="hide"></p>
+          <button type="submit" (click)="login()">Sign in</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

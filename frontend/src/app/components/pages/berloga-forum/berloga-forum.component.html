@@ -1,0 +1,85 @@
+<div class="white-panel-header p-m-6 title">Forum</div>
+<div class="main-wrapper p-grid p-justify-center p-nogutter">
+  <div class="main-forum-block p-col-11">
+    <button
+      pButton
+      pRipple
+      class="p-m-3 p-button-success add-button"
+      (click)="showAddQuestionDialog()"
+      icon="pi pi-plus"
+      label="Add question"
+      type="button"
+    ></button>
+    <div class="search-wrap p-m-3">
+      <app-search
+        class="search p-mt-3"
+        placeholder="Find question"
+        [(text)]="searchFroumString"
+        (textChange)="searchQuestion()"
+      ></app-search>
+    </div>
+    <div class="questions-wrapper">
+      <div
+        *ngIf="questions.length === 0 && searchFroumString === ''"
+        class="white-panel-header title"
+      >
+        There are no questions now, you can add first one :)
+      </div>
+      <div *ngFor="let q of questions">
+        <div class="question p-mx-3" (click)="routeToQuestion(q.id)">
+          <div class="left-question-block">
+            <span class="question-text p-ml-3">{{ q.question }}</span>
+            <span class="question-time p-ml-3">
+              {{ q.dateTime | date: "yyyy-MM-dd HH:mm" }}</span>
+          </div>
+          <div class="right-question-block">
+            <div class="comment-counter p-mr-3">
+              <i class="pi pi-comment"></i>
+              <span class="question-user p-ml-1">{{ q.comments?.length }}</span>
+            </div>
+            <span class="question-user p-mr-3">{{ q.sender?.username }}</span>
+            <div class="question-status done-wrapper p-mx-3" *ngIf="q.done">
+              <span class="done-span p-p-1">Resolved</span>
+            </div>
+            <div class="question-status not-done-wrapper p-mx-3" *ngIf="!q.done">
+              <span class="done-span p-p-1">Not resolved</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p-dialog
+  header="Add question"
+  [(visible)]="displayAddQuestion"
+  [style]="{ width: '50vw' }"
+  [baseZIndex]="10000"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <div class="inputs-wrapper">
+    <label class="dialog-label" for="question">Question text</label>
+    <textarea
+      class="input-text"
+      name="question"
+      pInputTextarea
+      [(ngModel)]="question"
+    ></textarea>
+    <label class="dialog-label" for="subject">Subject</label>
+    <p-autoComplete
+      [(ngModel)]="subject"
+      [suggestions]="subjects"
+      field="code"
+      [dropdown]="true"
+    ></p-autoComplete>
+  </div>
+  <ng-template pTemplate="footer">
+    <p-button
+      (click)="addQuestion()"
+      label="Add"
+      styleClass="p-button-text"
+    ></p-button>
+  </ng-template>
+</p-dialog>

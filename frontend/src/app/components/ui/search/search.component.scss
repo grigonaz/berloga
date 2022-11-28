@@ -1,0 +1,8 @@
+@import "/src/colors.scss";
+.search-input{
+    width: 100%;
+    max-width: 300px;
+    border-radius: 10px;
+    background: $secondaryColor;
+    margin-right: 40px;
+}

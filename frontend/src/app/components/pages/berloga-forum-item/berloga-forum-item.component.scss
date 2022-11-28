@@ -1,0 +1,105 @@
+@import "../../../../colors.scss";
+
+.main-wrapper {
+  height: 100%;
+}
+
+.question-main {
+  border-radius: 10px;
+  background-color: $primaryBackgroundLight;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.q-left-panel {
+  min-width: 350px;
+}
+
+.question-block {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.question-contol {
+  display: flex;
+  flex-direction: column;
+}
+
+.comment {
+  border-radius: 5px;
+  background-color: $secondaryColor;
+}
+
+.comment-user {
+  float: right;
+}
+
+.question-text {
+  max-width: 70vw;
+}
+
+.comment-controll {
+  transform: scale(0.8);
+}
+
+.done-wrapper {
+  background-color: #9c27b0;
+  color: aliceblue;
+  border-radius: 3px;
+  max-width: fit-content;
+}
+
+.not-done-wrapper {
+  background-color: #d32f2f;
+  color: aliceblue;
+  border-radius: 3px;
+  max-width: fit-content;
+}
+
+.subject {
+  float: right;
+}
+
+.add-comment-button {
+ max-width: 220px;
+}
+
+.buttons{
+  max-height: 34px;
+}
+
+.input-comment {
+  width: 40vw;
+}
+
+.inputs-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-text {
+  width: 45vw;
+  max-width: 45vw;
+  float: left;
+}
+
+.dialog-label {
+  margin: 20px;
+  float: left;
+}
+
+.subject-multiselect {
+  float: left;
+}
+
+.comment-controll {
+  float: right;
+}
+
+.comment-controll:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+  color: #9c27b0;
+}

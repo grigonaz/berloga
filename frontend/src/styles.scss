@@ -1,0 +1,57 @@
+@import "/src/colors.scss";
+
+/* You can add global styles to this file, and also import other style files */
+* {
+  font-family: 'noto-sans';
+}
+
+// usable anywhere
+.height-100 {
+  height: 100%;
+}
+
+body, html {
+  margin: 0px;
+  padding: 0px;
+  height: 100%;
+}
+
+.white-panel-header {
+  color: white;
+  font-size: 32px;
+  text-shadow: 4px 3px 3px rgba(0, 0, 0, 0.25);
+  font-weight: bold;
+}
+
+.brown-button {
+  background: $primaryBackgroundDark!important;
+  border: 1px solid darken($primaryBackgroundDark, 5)!important;
+  border-radius: 5px;
+  color: $primaryTextColorLight!important;
+  text-align: center;
+  height: 34px;
+  line-height: 34px;
+  width: auto;
+  padding: 0px;
+  padding-left: 9px;
+  padding-right: 9px;
+  font-size: 14px;
+  white-space:nowrap !important;
+}
+
+.brown-button:hover {
+  background: darken($primaryBackgroundDark, 15)!important;
+  border: 1px solid darken($primaryBackgroundDark, 15)!important;
+  transition: background-color 0.3s, border 0.3s;
+  cursor: pointer;
+}
+
+.brown-button:active {
+  background: darken($primaryBackgroundDark, 30)!important;
+  border: 1px solid darken($primaryBackgroundDark, 30)!important;
+}
+
+.brown-button:focus {
+  outline: none!important;
+  box-shadow: none!important;
+}

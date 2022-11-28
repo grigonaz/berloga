@@ -1,0 +1,27 @@
+:host {
+  max-height: 100%;
+  height: 100%;
+  display: inline-block;
+  margin-left: 5px;
+  margin-right: 5px;
+  font: inherit;
+}
+
+button.buton {
+  width: auto;
+  height: 100%;
+  border: 0px;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.0);
+  text-align: center;
+  line-height: 1em;
+  cursor: pointer;
+  transition: background-color 0.4s ;
+  font: inherit;
+  &:focus {
+    outline: none;
+  }
+  &:hover {
+    background: rgba(0, 0, 0, 0.2);
+  }
+}

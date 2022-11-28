@@ -1,0 +1,27 @@
+<div class="p-grid p-nogutter p-jc-between">
+    <div class="white-panel-header p-m-6 title">Subjects</div>
+    <app-search class="p-m-6" placeholder="Vyhledat předmět"></app-search>
+ </div>
+<div class="p-grid p-nogutter p-m-4">
+    <div (click)="routeTo(subject.id)" *ngFor="let subject of subjectList" class="p-col-6 p-md-4 p-lg-2 p-p-2" >
+      <app-subject-list-item class="subject-item" [name]="subject.name?subject.name:'Empty name'" [code]="subject.code?subject.code:'Empty code'"></app-subject-list-item>
+    </div>
+    <p-button class="p-col-12 p-mt-4 p-d-flex p-jc-end" styleClass="brown-button p-shadow-3" (click)="addSubjectShow()">
+      Add subject
+    </p-button>
+</div>
+
+<p-dialog header="Add subject" [(visible)]="addSubjectDialog" [style]="{ width: '30vw' }" [baseZIndex]="10000"
+  [draggable]="false" [resizable]="false" [modal]="true">
+  <input class="p-col-12 p-mb-2" pInputText [(ngModel)]="createSubjectDTO.name" type="text"
+    placeholder="Insert name" />
+  <input class="p-col-12 p-mb-2" pInputText [(ngModel)]="createSubjectDTO.code" type="text"
+    placeholder="Insert code" />
+  <input class="p-col-12 p-mb-2" pInputText [(ngModel)]="createSubjectDTO.description" type="text"
+    placeholder="Insert description" />
+  <ng-template pTemplate="footer">
+    <p-button (click)="createSubject()" label="Create" styleClass="p-button-text"></p-button>
+  </ng-template>
+</p-dialog>
+
+

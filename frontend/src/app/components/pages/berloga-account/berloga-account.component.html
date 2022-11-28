@@ -1,0 +1,156 @@
+<div class="p-grid p-nogutter welcome-holder">
+  <div class="p-col-12 p-md-4 p-p-6 left-side">
+    <div class="white-panel-header name-header">Administration</div>
+    <div class="account-list">
+      <app-search placeholder="Find user" (textChange)="searchAcconts()" [(text)]="searchText"></app-search>
+      <div class="account-item p-shadow-1" *ngFor="let acc of listAccounts" (click)="loadProfile(acc.id)">
+        {{ acc.username }}
+      </div>
+      <div *ngIf="adminVisibility" class="p-shadow-1 add-user" (click)="displayCreateUser = !displayCreateUser">
+        Add
+      </div>
+    </div>
+  </div>
+  <div class="p-col-12 p-md-8 p-p-6 right-side">
+    <div class="white-panel-header name-header">Account profile</div>
+    <div class="acount-detail p-grid p-nogutter p-p-5" *ngIf="!!selectedAccount">
+      <div class="p-col-12 p-grid p-nogutter p-jc-between">
+        <div class="">
+          <h3 class="p-my-2">Personal information</h3>
+          <div class="personal-info-id"><b>ID:</b> {{ selectedAccount.id }}</div>
+          <div class="p-row personal-info-name">
+            <b>Name: </b> {{ selectedAccount.firstName + " " + selectedAccount.lastName }}
+          </div>
+          <div class="personal-info-username">
+            <b>Username:</b> {{ selectedAccount.username }}
+          </div>
+        </div>
+        <div class="" *ngIf="adminVisibility">
+          <h3 class="p-my-2">Administration information</h3>
+          <div class="personal-info-email">
+            <b>Email:</b> {{ selectedAccount.email }}
+          </div>
+          <div class="p-col-12 p-d-flex p-nogutter p-flex-column p-jc-end">
+            <p-button (click)="displayEditUser=!displayEditUser" label="Change users information"
+              class="p-button-text change-delete-button p-mb-2 p-ml-auto" styleClass="brown-button"></p-button>
+            <p-button (click)="deleteUser()" label="Delete user" class="p-button-text change-delete-button p-ml-auto"
+              styleClass="brown-button"></p-button>
+          </div>
+        </div>
+      </div>
+      <div class="p-col-12 p-mb-6">
+        <div class="p-d-flex p-jc-between">
+          <h3 class="p-my-2">User's roles</h3>
+          <button class="brown-button" (click)="displayRole = !displayRole" *ngIf="adminVisibility">
+            Add role
+          </button>
+        </div>
+        <div class="roles-holder">
+          <div class="role-item" [ngClass]="
+              role == 'MODERATOR'
+                ? 'role-moderator'
+                : role == 'TEACHER'
+                ? 'role-teacher'
+                : ''
+            " *ngFor="let role of selectedAccount.roles">{{ role }}<span class="delete-role-button"
+              (click)="deleteRole(role)">X</span></div>
+        </div>
+      </div>
+      <div class="p-col-12 p-grid p-nogutter">
+        <h3 class="p-col-6 p-my-2">User's subjects</h3>
+        <div class="p-d-flex p-col-6 p-my-2 p-jc-end">
+          <button class="brown-button" (click)="displaySubjects = !displaySubjects" *ngIf="adminVisibility">
+            Add subject
+          </button>
+        </div>
+        <div class="subject-item" *ngFor="let subject of selectedAccountSubjects">
+          <div class="subject-item-data">{{ subject.name }}</div>
+          <div class="subject-item-data p-text-uppercase p-text-bold p-ml-3">
+            {{ subject.code }}
+          </div>
+          <div class="subject-item-data">{{ subject.type }}</div>
+          <button class="p-col-5 p-nogutter p-shadow-1 brown-button remove-button" (click)="deleteSubject(subject.id)">
+            Remove
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ADD USER DIALOG -->
+<p-dialog header="Add user" [(visible)]="displayCreateUser" [style]="{ width: '30vw' }" [baseZIndex]="10000"
+  [draggable]="false" [resizable]="false" [modal]="true">
+  <input class="p-col-12 p-mb-2" pInputText [(ngModel)]="createUserDTO.firstName" type="text"
+    placeholder="Insert firstname" />
+  <input class="p-col-12 p-mb-2" pInputText [(ngModel)]="createUserDTO.lastName" type="text"
+    placeholder="Insert lastname" />
+  <input class="p-col-12 p-mb-2" pInputText [(ngModel)]="createUserDTO.email" type="text" placeholder="Insert email" />
+  <input class="p-col-12 p-mb-2" pInputText [(ngModel)]="createUserDTO.username" type="text"
+    placeholder="Insert username" />
+  <input class="p-col-12 p-mb-2" pInputText [(ngModel)]="createUserDTO.password" type="password"
+    placeholder="Insert password" />
+  <ng-template pTemplate="footer">
+    <p-button (click)="createUser()" label="Create" styleClass="p-button-text"></p-button>
+  </ng-template>
+</p-dialog>
+
+<p-dialog header="Change user" [(visible)]="displayEditUser" [style]="{ width: '30vw' }" [baseZIndex]="10000"
+  [draggable]="false" [resizable]="false" [modal]="true">
+  <span class="p-float-label p-mb-4 p-mt-6">
+    <input id="float-input-1" class="p-col-12" pInputText [(ngModel)]="editUserDTO.firstName" type="text" />
+    <label for="float-input-1">Firstname</label>
+  </span>
+  <span class="p-float-label p-my-4">
+    <input id="float-input-2" class="p-col-12" pInputText [(ngModel)]="editUserDTO.lastName" type="text" />
+    <label for="float-input-2">Lastname</label>
+  </span>
+  <span class="p-float-label p-my-4">
+    <input id="float-input-3" class="p-col-12" pInputText [(ngModel)]="editUserDTO.email" type="text" />
+    <label for="float-input-3">Email</label>
+  </span>
+  <span class="p-float-label p-my-4">
+    <input id="float-input-4" class="p-col-12" pInputText [(ngModel)]="editUserDTO.username" type="text/">
+    <label for="float-input-4">Username</label>
+  </span>
+  <span class="p-float-label p-my-4">
+    <input id="float-input-5" class="p-col-12" pInputText [(ngModel)]="editUserDTO.password" type="password" />
+    <label for="float-input-5">Password</label>
+  </span>
+  <ng-template pTemplate="footer">
+    <p-button (click)="modifyUser()" label="Update user's information" styleClass="p-button-text"></p-button>
+  </ng-template>
+</p-dialog>
+
+<!-- ADD ROLE DIALOG -->
+<p-dialog header="Choose role" [(visible)]="displayRole" [style]="{ width: '30vw' }" [baseZIndex]="10000"
+  [draggable]="false" [resizable]="false" [modal]="true">
+  <div class="p-grid" *ngFor="let role of allRoles">
+    <div class="p-col-12 p-grid p-nogutter p-d-flex p-js-between p-mb-1">
+      <div class="p-col-6 p-text-capitalize in-center">{{ role }}</div>
+      <p-button class="p-col-6" styleClass="brown-button p-shadow-3" (click)="addRole(role)">
+        Add role
+      </p-button>
+    </div>
+  </div>
+</p-dialog>
+
+<!-- ADD SUBJECT DIALOG -->
+<p-dialog header="Choose subject" [(visible)]="displaySubjects" [modal]="true">
+  <div class="p-grid" *ngFor="let subject of allSubjects">
+    <div class="p-col-7 p-grid p-d-flex p-js-center p-ac-center">
+      <div class="p-col-8 p-text-center">{{ subject.name }}</div>
+      <div class="p-col-4 p-text-center p-text-uppercase p-text-bold">
+        {{ subject.code }}
+      </div>
+    </div>
+    <div class="p-col-5 p-d-flex p-wrap p-flex-column">
+      <button class="p-shadow-3 brown-button p-m-1" (click)="addSubject(subject.id, 'STUDENT')">
+        Add as student
+      </button>
+      <button class="p-shadow-3 brown-button p-m-1" (click)="addSubject(subject.id, 'TEACHER')">
+        Add as teacher
+      </button>
+    </div>
+  </div>
+</p-dialog>

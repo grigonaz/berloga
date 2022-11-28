@@ -1,0 +1,79 @@
+@import "/src/colors.scss";
+
+.left-bar {
+  background: $primaryBackgroundDark;
+  min-height: 80vh;
+  margin-top:20px;
+  margin-left:20px;
+  border-radius: 15px;
+}
+
+.subject-element {
+  background: #C4C4C4;
+  margin-top: 20px;
+  padding: 5px;
+  border-radius: 15px;
+}
+
+.subject-element a {
+  padding-left: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  color: black;
+}
+
+.main-block {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+}
+
+.subject-name h1 {
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+  font-weight: 400;
+}
+
+.subject-name h2 {
+  margin-top: 0px;
+  font-weight: 700;
+}
+
+.right-block {
+  padding-left: 20px;
+}
+
+.subject-name {
+  text-shadow:2px 5px 5px black;
+  color: white;
+}
+
+.subject-information {
+  background: #CFDAC8;
+  border-radius: 15px;
+  padding-bottom: 15px;
+
+}
+
+.subject-information h3 {
+  padding-left: 20px;
+  padding-top: 30px;
+}
+
+.subject-information p {
+  padding-left: 40px;
+}
+
+
+.subject-element div:hover {
+  cursor: pointer;
+
+}
+
+.subject-element:hover {
+  transform: scale(1.03);
+}
+
+.subject-element div {
+  font-weight: 600;
+}

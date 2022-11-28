@@ -1,0 +1,149 @@
+<div class="white-panel-header p-m-6 title">Question</div>
+<div class="main-wrapper p-grid p-justify-center p-nogutter">
+  <div class="question-main p-col-11">
+    <div class="question-block p-m-3">
+      <div class="q-left-panel">
+        <div class="question-text p-mb-3">{{ question.question }}</div>
+        <div class="subject">{{ question.subjectId }}</div>
+        <div class="p-mb-1">{{ question.sender.username }}</div>
+        <div>{{ question.dateTime | date: "yyyy-MM-dd HH:mm" }}</div>
+        <div class="done-wrapper p-my-3" *ngIf="question.done">
+          <span class="done-span p-p-1">This question is already resolved</span>
+        </div>
+        <div class="not-done-wrapper p-my-3" *ngIf="!question.done">
+          <span class="done-span p-p-1">This question is not resolved yet</span>
+        </div>
+      </div>
+      <div class="q-right-panel">
+        <div
+          class="question-contol"
+          *ngIf="
+            logged.id === question.sender.id || logged.roles.some(isModerator)
+          "
+        >
+          <button
+            *ngIf="!question.done"
+            pButton
+            pRipple
+            class="p-m-3 p-button-help p-button-sm buttons"
+            (click)="markAsResolved()"
+            icon="pi pi-plus"
+            label="Mark as resolved"
+            type="button"
+          ></button>
+          <button
+            pButton
+            pRipple
+            class="p-mx-3 p-button-sm p-button-danger buttons"
+            (click)="confirmDeleteQuestion()"
+            icon="pi pi-plus"
+            label="Delete question"
+            type="button"
+          ></button>
+          <button
+            pButton
+            pRipple
+            class="p-m-3 p-button-sm p-button-secondary buttons"
+            (click)="showEditQuestion()"
+            icon="pi pi-plus"
+            label="Edit question"
+            type="button"
+          ></button>
+        </div>
+      </div>
+    </div>
+    <button
+      pButton
+      pRipple
+      class="p-mx-3 p-button-success add-comment-button buttons"
+      (click)="showAddComment()"
+      icon="pi pi-plus"
+      label="Add comment"
+      type="button"
+    ></button>
+    <div class="comments-wrapper p-m-3">
+      <div class="comment p-mb-3" *ngFor="let comment of question.comments">
+        <div class="p-mr-3 p-mt-1 comment-user">
+          <div
+            class=""
+            *ngIf="
+              comment.sender.id === logged.id || logged.roles.some(isModerator)
+            "
+          >
+            <i
+              (click)="confirmDeleteComment(comment.id)"
+              class="p-ml-2 comment-controll pi pi-trash"
+            ></i>
+          </div>
+          <span>{{ comment.sender.username }}</span>
+        </div>
+        <div class="p-ml-3 p-my-2 comment-content">{{ comment.content }}</div>
+        <div class="p-ml-3 p-my-3 comment-date-time">
+          {{ comment.dateTime | date: "yyyy-MM-dd HH:mm" }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<p-dialog
+  header="Add comment"
+  [(visible)]="displayAddComment"
+  [style]="{ width: '50vw' }"
+  [baseZIndex]="10000"
+  [draggable]="false"
+  [resizable]="false"
+  position="bottom"
+  [modal]="true"
+>
+  <div class="inputs-wrapper">
+    <label class="dialog-label" for="question">Text</label>
+    <textarea
+      class="p-ml-3 input-comment"
+      name="question"
+      pInputTextarea
+      [(ngModel)]="comment"
+    ></textarea>
+  </div>
+  <ng-template pTemplate="footer">
+    <p-button
+      (click)="addComment()"
+      label="Add"
+      styleClass="p-button-text"
+    ></p-button>
+  </ng-template>
+</p-dialog>
+
+<p-dialog
+  header="Edit question"
+  [(visible)]="displayEditQuestion"
+  [style]="{ width: '50vw' }"
+  [baseZIndex]="10000"
+  [draggable]="false"
+  [resizable]="false"
+  (onHide)="getQuestion()"
+>
+  <div class="inputs-wrapper">
+    <label class="dialog-label" for="question">Question text</label>
+    <textarea
+      class="input-text"
+      name="question"
+      pInputTextarea
+      [(ngModel)]="question.question"
+    ></textarea>
+    <label class="dialog-label" for="subject">Subject</label>
+    <p-multiSelect class="subject-multiselect" name="subject"></p-multiSelect>
+  </div>
+  <ng-template pTemplate="footer">
+    <p-button
+      (click)="editQuestion()"
+      label="Edit"
+      styleClass="p-button-text"
+    ></p-button>
+  </ng-template>
+</p-dialog>
+
+<p-confirmDialog
+  [style]="{ width: '50vw' }"
+  [baseZIndex]="10000"
+  rejectButtonStyleClass="p-button-text"
+></p-confirmDialog>

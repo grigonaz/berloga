@@ -1,0 +1,17 @@
+<p-toast class="toast idk" position="bottom-right"></p-toast>
+<div id="bar">
+  <div class="menu-items">
+    <app-bar-menu-button text="Předměty" [routerLink]="['/portal/subjects']"></app-bar-menu-button>
+    <app-bar-menu-button text="Kalendář" [routerLink]="['/portal/calendar']"></app-bar-menu-button>
+    <app-bar-menu-button text="Zprávy" [routerLink]="['/portal/chats']"></app-bar-menu-button>
+    <app-bar-menu-button text="Fórum" [routerLink]="['/portal/forum']"></app-bar-menu-button>
+    <app-bar-menu-button text="Účet" [routerLink]="['/portal/account']"></app-bar-menu-button>
+    <app-bar-menu-button text="Odhlásit" (click)="logout()"></app-bar-menu-button>
+  </div>
+  <div class="logo-bear" title="Logo berloga"  [routerLink]="['/portal/welcome']"></div>
+</div>
+<div class="routed-views">
+  <router-outlet></router-outlet>
+  <img id="bush-down-page" src="assets/bush_down_page.png" alt="Bush down on page">
+</div>
+

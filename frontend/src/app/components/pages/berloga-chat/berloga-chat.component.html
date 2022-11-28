@@ -1,0 +1,139 @@
+<div class="white-panel-header p-m-6 title">Chats</div>
+<div class="p-grid p-m-6 p-nogutter">
+  <!-- LEFT BAR -->
+  <div class="left-bar p-col-3">
+    <div class="search-block">
+      <app-search class="search p-mt-3" placeholder="Find chat" (textChange)="searchChat()" [(text)]="findChatString">
+      </app-search>
+      <button pButton pRipple (click)="searchChat()" type="button" label="Find"
+        class="p-mt-3 p-button-success"></button>
+    </div>
+    <div class="chats-wrapper">
+      <div *ngFor="let name of conversations" class="chat-preview">
+        <div (click)="getChat(name.chatId)" class="chat-button">
+          <p>{{ name.chatName }}</p>
+        </div>
+      </div>
+    </div>
+    <button pButton pRipple class="p-mt-3 p-button-success add-butt" (click)="showAddChatDialog()" icon="pi pi-plus"
+      label="Create" type="button"></button>
+  </div>
+
+  <!-- CHAT BLOCK -->
+  <div class="chat-block" *ngIf="curChat">
+    <!-- CHAT HEADER -->
+    <div class="chat-header p-d-flex p-ac-center p-jc-between">
+      <div class="chat-name p-mx-4">{{ curChat.chatName }}</div>
+      <div class="p-d-flex p-ai-center">
+        <button pButton pRipple (click)="showAddMemberDialog()" type="button" icon="pi pi-plus"
+          class="p-mx-2 right-icon p-button-rounded p-button-success p-button-outlined"></button>
+        <button pButton pRipple (click)="showAllMembersDialog()" type="button" icon="pi pi-user"
+          class="p-mx-2 right-icon p-button-rounded p-button-success p-button-outlined"></button>
+        <button pButton pRipple (click)="showEditNameDialog()" type="button" icon="pi pi-pencil"
+          class="p-mx-2 right-icon p-button-rounded p-button-success p-button-outlined"></button>
+      </div>
+    </div>
+    <!-- CHAT BODY -->
+    <div class="chat-body">
+      <div *ngFor="let message of curChat.messages">
+        <!-- who(message) vrací my-message nebo other-message jako class name podle které se to otočí na správnou stranu -->
+        <div class="chat-message" [ngClass]="who(message)">
+          <div *ngIf="!message.fileId" class="chat-message-text">{{ message.content }}</div>
+          <div *ngIf="message.fileId" class="chat-message-file chat-message-text">
+            <a (click)="downlaodFile(message.fileId)">{{message.fileName}}</a>
+          </div>
+          <div class="chat-message-details">
+            <div class="chat-message-date">{{ message.date | date: "yyyy-MM-dd HH:mm" }}</div>
+            <div class="chat.message-author">{{ message.sender.username }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- CHAT FOOTER -->
+    <div class="chat-footer">
+      <input class="message-input" type="text" [(ngModel)]="message" />
+      <p-fileUpload #file
+        chooseIcon="pi pi-paperclip"
+        class="attach-button clear-button p-button-secondary" mode="basic" name="file"
+        [url]="apiFilePath" [customUpload]="true"
+        (uploadHandler)="uploadFileAndSendMessageWithIt($event)" [auto]="true"></p-fileUpload>
+      <button pButton pRipple (click)="sendMessage()" type="button" label="Send"
+        class="send-button clear-button p-button-secondary"></button>
+    </div>
+  </div>
+</div>
+
+<!-- ADD CHAT DIALOG -->
+<p-dialog header="Create chat" [(visible)]="displayCreateChat" [style]="{ width: '30vw' }" [baseZIndex]="10000"
+  [draggable]="false" [resizable]="false" [modal]="true">
+  <label for="name">Name</label>
+  <input class="p-ml-4" name="name" type="text" pInputText [(ngModel)]="name" />
+  <ng-template pTemplate="footer">
+    <p-button (click)="createChat()" label="Create" styleClass="p-button-text"></p-button>
+  </ng-template>
+</p-dialog>
+
+<!-- ADD MEMBER DIALOG -->
+<p-dialog header="Add member" [(visible)]="displayAddMember" [style]="{ width: '30vw' }" [baseZIndex]="10000"
+  [draggable]="false" [resizable]="false" [modal]="true">
+  <p-table [value]="usersForInviting" class="table">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Username</th>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-user>
+      <tr>
+        <td>
+          {{ user.username }}
+        </td>
+        <td>
+          <div>
+            <button pButton pRipple type="button" (click)="addMember(user.id)" icon="pi pi-plus"
+              class="p-button-rounded p-button-success"></button>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-dialog>
+<!-- SHOW MEMBERS DIALOG -->
+<p-dialog header="Members" [(visible)]="displayAllMembers" [style]="{ width: '40vw' }" [baseZIndex]="10000"
+  [draggable]="false" [resizable]="false" [modal]="true">
+  <p-table [value]="users" class="table">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Username</th>
+        <th>Role</th>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-user>
+      <tr>
+        <td>
+          {{ user.user.username }}
+        </td>
+        <td>
+          <div [class]="'role-wrapper-default role-wrapper-' + user.role">
+            <span>{{ user.role }}</span>
+          </div>
+        </td>
+        <td>
+          <button pButton pRipple type="button" (click)="removeMember(user.user.id)" icon="pi pi-minus"
+            class="p-button-rounded p-button-danger"></button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-dialog>
+
+<!-- CHANGE CHAT NAME DIALOG -->
+<p-dialog header="Change chat name" [(visible)]="displayEditName" [style]="{ width: '30vw' }" [baseZIndex]="10000"
+  [draggable]="false" [resizable]="false" [modal]="true">
+  <label for="name">Name</label>
+  <input class="p-ml-4" name="name" type="text" pInputText [(ngModel)]="changedName" />
+  <ng-template pTemplate="footer">
+    <p-button (click)="changeChatName()" label="Confirm" styleClass="p-button-text"></p-button>
+  </ng-template>
+</p-dialog>
